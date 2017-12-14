@@ -59,11 +59,10 @@ public class ProducerHandler extends ChannelDuplexHandler {
         super.channelActive(ctx);
     }
 
-//    @Override
-//    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-//        factory.remove(ctx.channel());
-//        super.channelInactive(ctx);
-//    }
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        TLog.warn("[provider]a channel inactive:" + ctx.channel());
+    }
 //
 //    @Override
 //    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {

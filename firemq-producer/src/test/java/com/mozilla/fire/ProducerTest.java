@@ -19,14 +19,5 @@ public class ProducerTest {
 
         System.out.println("消息发送结果:" + sendResult.isSuccess());
         System.out.println("消息发送时间:" + sendResult.getSendSuccessTime().toLocaleString());
-
-        while(true){
-            System.out.println("查看是否是deamon线程搞事情...");
-            try {
-                Thread.sleep(3000);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
     }
 }

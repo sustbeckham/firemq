@@ -17,7 +17,7 @@ public class BrokerServerHandler extends ChannelInboundHandlerAdapter {
 
         Request request = (Request)msg;
 
-        TLog.info("message received, message=" + request);
+        TLog.info("[Broker] message received, message=" + request);
 
         // Netty服务端收到消息后, 将消息转发至核心broker层
         broker.deliver(request);
@@ -34,9 +34,14 @@ public class BrokerServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        TLog.warn("[Broker] a channel inactive:" + ctx.channel());
+    }
+
+    @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         // Close the connection when an exception is raised.
-        cause.printStackTrace();
+        TLog.warn("[Broker] an exception is raised:" + ctx.channel(), cause);
         ctx.close();
     }
 }

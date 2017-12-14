@@ -18,7 +18,7 @@ public class FileStore implements Store{
     @Override
     public StoreResult write(Object message) {
 
-        TLog.info("[Store]message write success. message=" + message);
+        TLog.info("[Store] message write success. message=" + message);
 
         queue.offer(message);
 

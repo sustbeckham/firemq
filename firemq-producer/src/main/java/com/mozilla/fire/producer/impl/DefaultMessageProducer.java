@@ -45,15 +45,19 @@ public class DefaultMessageProducer implements MessageProducer {
         request.setRequestType(RequestType.DELIVER.getCode());
         request.setMessage(message);
 
-        // 2. write RequestFuture
+        // 2. 包装RequestFuture对象, 便于后续写入Response
         RequestFuture future = RequestFuture.create(request);
         channel.writeAndFlush(future);
 
+        // 3. wait response
         try {
             future.get();
         }catch (Exception e){
             TLog.error("sendMessage error", e);
         }
+
+        // 4. 主动关闭连接
+        // channel.close();
 
         sendResult.setSuccess(true);
         sendResult.setSendSuccessTime(new Date());
