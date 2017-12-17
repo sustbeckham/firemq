@@ -32,15 +32,17 @@ public class FileStore implements Store{
     @Override
     public Object consume() {
 
+        TLog.info("[Store] message ready to consume。");
+
         Object result = null;
 
         try{
             result = queue.take();
         }catch (Exception e){
-            TLog.error("[Store]message read error。", e);
+            TLog.error("[Store] message read error。", e);
         }
 
-        TLog.info("[Store]message read success。");
+        TLog.info("[Store] message read success。");
 
         return result;
     }

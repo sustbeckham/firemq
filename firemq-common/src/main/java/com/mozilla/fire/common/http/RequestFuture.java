@@ -77,7 +77,7 @@ public class RequestFuture extends AbstractFuture<Object> {
     @Override
     public Response get() throws InterruptedException, ExecutionException {
         try {
-            return (Response) super.get(1000, TimeUnit.MILLISECONDS);
+            return (Response) super.get(30000, TimeUnit.MILLISECONDS);
         } catch (TimeoutException e) {
             Response response = new Response(request.getRequestID());
             response.setErrorCode(-1);

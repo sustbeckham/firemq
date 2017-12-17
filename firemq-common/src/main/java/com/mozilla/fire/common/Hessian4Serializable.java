@@ -14,25 +14,24 @@ import java.io.Serializable;
 public class Hessian4Serializable{
 
     public static byte[] encode(Object obj) {
-        if (obj == null)
-            throw new NullPointerException();
 
-        if(obj.getClass() == short.class || obj.getClass() == Short.class){
-            obj = new ShortRestore(Short.parseShort(String.valueOf(obj)));
+        if(obj != null) {
+            if (obj.getClass() == short.class || obj.getClass() == Short.class) {
+                obj = new ShortRestore(Short.parseShort(String.valueOf(obj)));
+            }
+
+            if (obj.getClass() == byte.class || obj.getClass() == Byte.class) {
+                obj = new ByteRestore(Byte.parseByte(String.valueOf(obj)));
+            }
+
+            if (obj.getClass() == char.class || obj.getClass() == Character.class) {
+                obj = new CharRestore((char) obj);
+            }
+
+            if (obj.getClass() == float.class || obj.getClass() == Float.class) {
+                obj = new FloatRestore(Float.parseFloat(String.valueOf(obj)));
+            }
         }
-
-        if(obj.getClass() == byte.class || obj.getClass() == Byte.class){
-            obj = new ByteRestore(Byte.parseByte(String.valueOf(obj)));
-        }
-
-        if(obj.getClass() == char.class || obj.getClass() == Character.class){
-            obj = new CharRestore((char)obj);
-        }
-
-        if(obj.getClass() == float.class || obj.getClass() == Float.class){
-            obj = new FloatRestore(Float.parseFloat(String.valueOf(obj)));
-        }
-
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
@@ -79,14 +78,10 @@ public class Hessian4Serializable{
     }
 
     public static void main(String[] args) {
-        Hessian4Serializable strategy = new Hessian4Serializable();
+        byte[] array = encode(null);
+        System.out.println(array);
 
-        short s = 24;
-        byte bb[] = strategy.encode(s);
-        for(byte b : bb){
-            System.out.println(b);
-        }
-        System.out.println(strategy.decode(bb).getClass());
+        System.out.println(decode(array));
     }
 }
 

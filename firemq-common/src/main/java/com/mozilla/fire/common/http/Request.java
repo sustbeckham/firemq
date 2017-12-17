@@ -14,6 +14,11 @@ public class Request<T> {
     // 请求数据内容
     private T message;
 
+    @Override
+    public String toString() {
+        return "requestId=" + requestID + ", requestType=" + requestType;
+    }
+
     public long getRequestID() {
         return requestID;
     }

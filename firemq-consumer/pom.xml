@@ -18,10 +18,6 @@
     <dependencies>
         <dependency>
             <groupId>com.mozilla.fire</groupId>
-            <artifactId>firemq-broker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mozilla.fire</groupId>
             <artifactId>firemq-common</artifactId>
         </dependency>
     </dependencies>

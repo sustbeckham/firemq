@@ -1,10 +1,8 @@
 package com.mozilla.fire.consumer.netty;
 
 import com.mozilla.fire.common.NamedThreadFactory;
-import com.mozilla.fire.common.http.decoder.RequestDecoder;
 import com.mozilla.fire.common.http.decoder.ResponseDecoder;
 import com.mozilla.fire.common.http.encoder.RequestEncoder;
-import com.mozilla.fire.common.http.encoder.ResponseEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.UnpooledByteBufAllocator;

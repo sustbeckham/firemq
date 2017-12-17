@@ -64,17 +64,17 @@ public class BrokerServer {
             ChannelFuture cf = bootstrap.bind(new InetSocketAddress("localhost", PORT));
             cf.await();
             if (cf.isSuccess()) {
-                TLog.warn("broker server start success, port: " + PORT);
+                TLog.warn("[Broker] server start success, port: " + PORT);
 
                 cf.channel().closeFuture().sync();
                 return;
             } else {
                 tryBind--;
                 if (tryBind <= 0) {
-                    TLog.warn("broker server start retry 3 times error, port:" + PORT);
+                    TLog.warn("[Broker] server start retry 3 times error, port:" + PORT);
                     System.exit(1);
                 } else {
-                    TLog.warn("broker server start error, after 3 second will retry. port:" + PORT, cf.cause());
+                    TLog.warn("[Broker] server start error, after 3 second will retry. port:" + PORT, cf.cause());
                     Thread.sleep(3000);
                 }
             }

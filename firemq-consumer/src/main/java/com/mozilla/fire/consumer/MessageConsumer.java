@@ -1,8 +1,13 @@
 package com.mozilla.fire.consumer;
 
+import com.mozilla.fire.common.Utils;
+import com.mozilla.fire.common.constants.RequestType;
+import com.mozilla.fire.common.http.Request;
+import com.mozilla.fire.common.http.RequestFuture;
+import com.mozilla.fire.common.http.Response;
+import com.mozilla.fire.common.log.TLog;
+import com.mozilla.fire.common.message.BaseMessage;
 import com.mozilla.fire.consumer.netty.ConsumerClient;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 
 /**
@@ -34,8 +39,19 @@ public class MessageConsumer {
      */
     public void start(){
         while(true) {
-           // Object message = brokerResult.getMessage();
-           // listener.process(message);
+            RequestFuture future = RequestFuture.create(buildPullRequest());
+            channel.writeAndFlush(future);
+
+            Response<BaseMessage> response = null;
+            try {
+                response = future.get();
+            }catch (Exception e){
+                TLog.error("[consumer] pull request error", e);
+            }
+
+            if(response != null && response.getResponse() != null){
+                listener.process(response.getResponse());
+            }
         }
     }
 
@@ -44,9 +60,10 @@ public class MessageConsumer {
      *
      * @return
      */
-    private ByteBuf buildPullRequest(){
-        ByteBuf pull = Unpooled.buffer(16);
-        pull.writeBytes("PULL".getBytes());
-        return pull;
+    private Request buildPullRequest(){
+        Request request = new Request();
+        request.setRequestID(Utils.nextID());
+        request.setRequestType(RequestType.PULL_REQUEST.getCode());
+        return request;
     }
 }
